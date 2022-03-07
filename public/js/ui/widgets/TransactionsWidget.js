@@ -12,7 +12,16 @@ class TransactionsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
+    try {
+      this.element = element;
+      if (!element) {
+        throw new Error("Элемент не существует!");
+      }
+    } catch(e) {
+      console.error(e.message);
+    }
 
+    this.registerEvents();
   }
   /**
    * Регистрирует обработчики нажатия на
@@ -21,6 +30,13 @@ class TransactionsWidget {
    * экземпляра окна
    * */
   registerEvents() {
-
+    let incomeBtn = this.element.querySelector(`.create-income-button`);
+    let expenseBtn = this.element.querySelector(`.create-expense-button`);
+    incomeBtn.addEventListener(`click`, ()=>{
+      App.getModal(`newIncome`).open();
+    })
+    expenseBtn.addEventListener(`click`, ()=> {
+      App.getModal(`newExpense`).open();
+    })
   }
 }
